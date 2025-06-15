@@ -2,7 +2,7 @@
 
 This is the **insecure version** of the Secure Feedback App, built intentionally to demonstrate unsafe web development practices for academic comparison. It is used as part of a Master's research project on the role of security protocols and testing tools in web applications.
 
-## ❗ Warning
+##  Warning
 > This application contains intentionally hardcoded secrets and insecure code. It must **never be deployed in a production environment**.
 
 ---
@@ -43,7 +43,7 @@ GitHub: [https://github.com/20110145/insecure-feedback-app](https://github.com/2
 
 ---
 
-## 📚 Author
+##  Author
 
 Muhammad Faizaan  Chaudhri
 MSc Computing (Information Systems Processes)  
