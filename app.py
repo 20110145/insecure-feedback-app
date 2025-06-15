@@ -1,21 +1,28 @@
 import os
 import csv
+import psycopg2
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from authlib.integrations.flask_client import OAuth
-from dotenv import load_dotenv
 
-load_dotenv()
+# DATABASE_URL = 'postgresql://postgres:permission@host.docker.internal:5432/insecurefeedback' 
+DATABASE_URL = 'postgresql://postgres:permission@localhost:5432/insecurefeedback' 
+ADMIN_EMAIL = "20110145@mail.wit.ie"
+
+
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY')
+app.secret_key = "MPjaMPBTKkTQWEwE5Kvr56lablVWvHGA4AXQcHkP6IA"
+
 
 # OAuth Setup
 oauth = OAuth(app)
 google = oauth.register(
     name='google',
-    client_id=os.getenv('GOOGLE_CLIENT_ID'),
-    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),
+   client_id="569772246800-41jgk7n2htup8v5tmadlkhpee4838dlt.apps.googleusercontent.com",
+   client_secret="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",
+   
+
     server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
     client_kwargs={
         'scope': 'openid email profile'
@@ -50,11 +57,21 @@ def submit():
     email = request.form['email']
     message = request.form['message']
 
-    with open('feedback.csv', mode='a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([name, email, message])
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cursor = conn.cursor()
+        # INSECURE: vulnerable to SQL injection
+        cursor.execute(f"INSERT INTO feedback (name, email, message) VALUES ('{name}', '{email}', '{message}')")
+
+  
+        conn.commit()
+        cursor.close()
+        conn.close()
+    except Exception as e:
+        return f"Database error: {e}", 500
 
     return redirect('/')
+
 
 @app.route('/login')
 def login():
@@ -67,7 +84,8 @@ def authorize():
     resp = google.get('https://openidconnect.googleapis.com/v1/userinfo')  # FIXED
     user_info = resp.json()
 
-    if user_info['email'] != os.getenv('ADMIN_EMAIL'):
+    if user_info['email'] != ADMIN_EMAIL:
+
         return "Unauthorized", 403
 
     user = User(user_info['sub'], user_info['email'])  # use 'sub' instead of 'id'
@@ -79,9 +97,18 @@ def authorize():
 @app.route('/admin')
 @login_required
 def admin():
-    with open('feedback.csv', newline='') as file:
-        entries = list(csv.reader(file))
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cursor = conn.cursor()
+        cursor.execute("SELECT name, email, message, submitted_at FROM feedback ORDER BY submitted_at DESC")
+        entries = cursor.fetchall()
+        cursor.close()
+        conn.close()
+    except Exception as e:
+        return f"Database error: {e}", 500
+
     return render_template('admin.html', entries=entries)
+
 
 @app.route('/logout')
 @login_required

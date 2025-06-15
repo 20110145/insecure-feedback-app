@@ -1,0 +1,13 @@
+
+
+  Target             │  insecure-feedback-app:latest  │   40C   184H   257M   165L     5?   
+    digest           │  2a0ac6c1a6c8                  │                                     
+  Base image         │  python:3.6                    │   39C   177H   242M   160L     5?   
+  Updated base image │  python:alpine                 │    0C     0H     0M     0L          
+                     │                                │   -39   -177   -242   -160     -5   
+
+What's next:
+    View vulnerabilities → docker scout cves insecure-feedback-app
+    View base image update recommendations → docker scout recommendations insecure-feedback-app
+    Include policy results in your quickview by supplying an organization → docker scout quickview insecure-feedback-app --org <organization>
+

@@ -15,5 +15,5 @@ A secure, Google OAuth-enabled web application for collecting feedback. Built wi
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/20110145/secure-feedback-app.git
+git clone https://github.com/20110145/secure-feedback-app
 cd secure-feedback-app
