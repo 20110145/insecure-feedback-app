@@ -7,7 +7,7 @@ This is the **insecure version** of the Secure Feedback App, built intentionally
 
 ---
 
-## 🔍 Purpose
+##  Purpose
 
 This version is designed to:
 - Lack environment-based secret management (secrets are hardcoded).
@@ -17,7 +17,7 @@ This version is designed to:
 
 ---
 
-## ⚙️ Features
+##  Features
 
 - Google OAuth login with hardcoded client ID and secret.
 - Feedback form that stores user input in an insecure PostgreSQL setup.
@@ -27,7 +27,7 @@ This version is designed to:
 
 ---
 
-## 🐍 Bandit & 🐳 Docker Scout
+##  Bandit &  Docker Scout
 
 This version will be scanned using:
 - **Bandit** for Python security issues.
@@ -37,23 +37,14 @@ The goal is to compare its results against the secure version of the app.
 
 ---
 
-## 📂 Repository
+##  Repository
 
 GitHub: [https://github.com/20110145/insecure-feedback-app](https://github.com/20110145/insecure-feedback-app)
 
 ---
 
-## 🔬 Research Context
-
-This application contributes to the following research questions:
-1. How do security protocols impact the development process of web applications?
-2. What are the primary challenges developers face when integrating security protocols like OAuth and JWT?
-3. How do security testing and audits contribute to the secure design and maintenance of web applications?
-
----
-
 ## 📚 Author
 
-Muhammad Faizaan  
+Muhammad Faizaan  Chaudhri
 MSc Computing (Information Systems Processes)  
 Southeast Technological University  
